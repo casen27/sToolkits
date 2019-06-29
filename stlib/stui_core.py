@@ -85,13 +85,13 @@ class MainWindow(tkinter.Tk):
         tokens1 = self.auths["BAIDU_DEFAULT"]
         tokens2 = self.auths["BAIDU_TRANSLATE"]
         self.auth1 = {
-                "appId": tokens1["appid"],
-                "apiKey": tokens1["apikey"],
-                "secretKey": tokens1["secretkey"]
+                "appid": tokens1["appid"],
+                "apikey": tokens1["apikey"],
+                "secretkey": tokens1["secretkey"]
                 }
         self.auth2 = {
                 "appid": tokens2["appid"],
-                "secretKey": tokens2["secretkey"]
+                "secretkey": tokens2["secretkey"]
                 }
 
     def _disable_all(self):
@@ -137,7 +137,7 @@ class MainWindow(tkinter.Tk):
         # 功能4：翻译
         if self.sub4.get() == 0:
             self.sub4.set(1)
-            sw = SubWindow4(self, self.workDir, self.auth1)
+            sw = SubWindow4(self, self.workDir, self.auth2)
             self.button4.wait_window(sw)
             self.sub4.set(0)
 

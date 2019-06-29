@@ -2,13 +2,13 @@
 
 DEFAULT_CONFIG = {
         "BAIDU_DEFAULT": {
-                "appId": "",
-                "apiKey": "",
-                "secretKey": ""
+                "appid": "",
+                "apikey": "",
+                "secretkey": ""
                 },
         "BAIDU_TRANSLATE": {
                 "appid": "",
-                "secretKey": ""
+                "secretkey": ""
                 },
         }
 

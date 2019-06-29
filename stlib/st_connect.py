@@ -17,10 +17,11 @@ class ConnectBaidu(object):
     def connect1(cls, auths):
         # 测试链接：语音转文字、文字转语音、图片OCR
         try:
-            client = AipSpeech(**auths)
-            result = client.synthesis('百度')
+            sy = Synthesis(auths,"百度")
+            result = sy.run()
         except Exception as e:
             result = {}
+            # print(e)
         if isinstance(result, dict):
             # 链接失败
             return False
@@ -36,7 +37,7 @@ class ConnectBaidu(object):
             result = t.run()
         except Exception as e:
             result = ""
-            print(e)
+            # print(e)
         if result == "英语":
             return True
         else:
@@ -48,7 +49,11 @@ class ASR(object):
     def __init__(self, workDir, file, auths):
         self.workDir = workDir
         self.file = file
-        self.client = AipSpeech(**auths)
+        self.auths = {}
+        self.auths["appId"] = auths["appid"]
+        self.auths["apiKey"] = auths["apikey"]
+        self.auths["secretKey"] = auths["secretkey"]
+        self.client = AipSpeech(**self.auths)
 
     def run(self):
         with open(self.file, 'rb') as fp:
@@ -83,8 +88,13 @@ class Synthesis(object):
 
     """
 
-    def __init__(self, auths, text, options):
-        self.client = AipSpeech(**auths)
+    def __init__(self, auths, text, options={}):
+        self.auths = {}
+        self.auths["appId"] = auths["appid"]
+        self.auths["apiKey"] = auths["apikey"]
+        self.auths["secretKey"] = auths["secretkey"]
+        # print(self.auths)
+        self.client = AipSpeech(**self.auths)
         self.text = text
         self.options = options
         self.options2 = {}
@@ -130,7 +140,7 @@ class Translate(object):
 
     def __init__(self, auths, text, params={}):
         self.appid = auths["appid"]
-        self.secretKey = auths["secretKey"]
+        self.secretKey = auths["secretkey"]
         self.q = text
         self.fromlang = params.get("en", "en")
         self.tolang = params.get("zh", "zh")
