@@ -1,12 +1,13 @@
 import os
 
-from stlib import MainWindow
+# from stlib.st_tkui_core import run_tkui
+from stlib.st_qtui_core import run_qtui
 
 
 def main():
     workDir = os.getcwd()
-    mw = MainWindow(workDir=workDir)
-    mw.run()
+    # run_tkui(workDir)
+    run_qtui(workDir)
 
 
 if __name__ == "__main__":

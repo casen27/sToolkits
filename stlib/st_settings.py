@@ -12,9 +12,10 @@ DEFAULT_CONFIG = {
                 },
         }
 
-DEFAULT_NAME = "sToolkits.ini"
+DEFAULT_INI_NAME = "sToolkits.ini"
 
-BAIDU_AI = "https://jingyan.baidu.com/article/f3e34a12df0cddf5eb65359f.html"
+BAIDU_AI_KEYS_URL = "https://jingyan.baidu.com/article/f3e34a12df0cddf5eb65359f.html"
 
-if __name__ == '__main__':
-    pass
+ProjectURL = "https://github.com/casen27/sToolkits"
+
+AboutHTML = "各种小工具"

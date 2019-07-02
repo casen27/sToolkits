@@ -1,16 +1,18 @@
+# 处理ini配置文件
+
 import configparser
 import os
 
 try:
-    from .st_settings import DEFAULT_CONFIG, DEFAULT_NAME
+    from .st_settings import DEFAULT_CONFIG, DEFAULT_INI_NAME
 except Exception:
-    from st_settings import DEFAULT_CONFIG, DEFAULT_NAME
+    from st_settings import DEFAULT_CONFIG, DEFAULT_INI_NAME
 
 
 class CONFIG(object):
     version = "1.0.0"
     default_config = DEFAULT_CONFIG
-    default_name = DEFAULT_NAME
+    default_name = DEFAULT_INI_NAME
 
     def __init__(self, workDir, file=""):
         self.file = file if file else self.default_name
@@ -21,6 +23,7 @@ class CONFIG(object):
 
     def _reset(self):
         self.con = configparser.ConfigParser()
+        # self.con.optionxform = str  # 保持获取的键原样。否则全为小写
 
     def get(self):
         if os.path.isfile(self.fullpath):
@@ -49,7 +52,3 @@ class CONFIG(object):
     def _save_file(self):
         with open(self.fullpath, "w", encoding="utf-8") as fp:
             self.con.write(fp)
-
-
-if __name__ == '__main__':
-    pass

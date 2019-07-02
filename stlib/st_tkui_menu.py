@@ -1,18 +1,11 @@
-# 菜单栏的全部配置
+# tkinter 菜单栏的全部配置
 
 import tkinter
 import webbrowser
 from tkinter.messagebox import askyesno, showinfo
 
-try:
-    from .st_config import CONFIG
-except Exception:
-    from st_config import CONFIG
-
-try:
-    from .st_settings import BAIDU_AI
-except Exception:
-    from st_settings import BAIDU_AI
+from .st_config import CONFIG
+from .st_settings import BAIDU_AI_KEYS_URL
 
 
 class MenuBase(object):
@@ -119,7 +112,7 @@ class SetKeysWindow(tkinter.Toplevel):
         self.text13 = tkinter.Entry(self, textvariable=self.str13, font=("", 12), width=40)
         self.text13.place(x=100, y=210)
 
-        self.button1 = tkinter.Button(self, text="申请key", font=("", 20), command=self.get_baidu_ai)
+        self.button1 = tkinter.Button(self, text="申请key", font=("", 20), command=self.get_baidu_ai_keys)
         self.button1.place(x=50, y=300, height=40, width=150)
 
         self.button2 = tkinter.Button(self, text="保存", font=("", 20), command=self.save)
@@ -146,9 +139,5 @@ class SetKeysWindow(tkinter.Toplevel):
         self.root.fresh_connect()
         self.destroy()
 
-    def get_baidu_ai(self):
-        webbrowser.open(BAIDU_AI)
-
-
-if __name__ == '__main__':
-    pass
+    def get_baidu_ai_keys(self):
+        webbrowser.open(BAIDU_AI_KEYS_URL)

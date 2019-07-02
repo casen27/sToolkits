@@ -1,7 +1,9 @@
 """
+链接百度API
 使用库  https://github.com/Baidu-AIP/python-sdk
 安装源  pip install git+https://github.com/Baidu-AIP/python-sdk.git@master
 """
+
 import hashlib
 import json
 import os
@@ -13,15 +15,19 @@ from aip import AipSpeech
 
 class ConnectBaidu(object):
     # 链接测试网络状况、账号密码是否可用
+    version = "1.0.0"
+
     @classmethod
     def connect1(cls, auths):
         # 测试链接：语音转文字、文字转语音、图片OCR
         try:
-            sy = Synthesis(auths,"百度")
+            sy = Synthesis(auths, "百度")
             result = sy.run()
+            print("百度语音文字OCR链接成功")
         except Exception as e:
             result = {}
             # print(e)
+            print("百度语音文字OCR链接失败")
         if isinstance(result, dict):
             # 链接失败
             return False
@@ -35,9 +41,11 @@ class ConnectBaidu(object):
         try:
             t = Translate(auths=auths, text="English")
             result = t.run()
+            print("百度翻译链接成功")
         except Exception as e:
             result = ""
             # print(e)
+            print("百度翻译链接失败")
         if result == "英语":
             return True
         else:
@@ -46,6 +54,8 @@ class ConnectBaidu(object):
 
 class ASR(object):
     # 声音文件转字符串
+    version = "1.0.0"
+
     def __init__(self, workDir, file, auths):
         self.workDir = workDir
         self.file = file
@@ -70,10 +80,8 @@ class ASR(object):
         return str0
 
 
-class Synthesis(object):
-    # 字符串合成语音文件
-
     """
+    Synthesis
     options参数    可需  描述
     tex  必填  合成的文本，使用UTF-8编码。小于2048个中文字或者英文数字。（文本在百度服务器内转换为GBK后，长度必须小于4096字节）
     tok  必填  开放平台获取到的开发者access_token（见上面的“鉴权认证机制”段落）
@@ -85,8 +93,12 @@ class Synthesis(object):
     vol  选填  音量，取值0-15，默认为5中音量
     per  选填  发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女声
     aue  选填  3为mp3格式(默认)； 4为pcm-16k；5为pcm-8k；6为wav（内容同pcm-16k）; 注意aue=4或者6是语音识别要求的格式，但是音频内容不是语音识别要求的自然人发音，所以识别效果会受影响。
-
     """
+
+
+class Synthesis(object):
+    # 字符串合成语音文件
+    version = "1.0.0"
 
     def __init__(self, auths, text, options={}):
         self.auths = {}
@@ -136,6 +148,7 @@ class Synthesis(object):
 
 
 class Translate(object):
+    version = "1.0.0"
     url = "http://api.fanyi.baidu.com/api/trans/vip/translate"
 
     def __init__(self, auths, text, params={}):
@@ -172,7 +185,3 @@ class Translate(object):
         # {'from': 'en', 'to': 'zh', 'trans_result': [{'src': 'English', 'dst': '英语'}]}
         result = datas["trans_result"][0]["dst"]
         return result
-
-
-if __name__ == '__main__':
-    pass

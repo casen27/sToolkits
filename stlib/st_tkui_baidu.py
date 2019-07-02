@@ -1,4 +1,4 @@
-# 子功能的界面
+# tkinter 子功能的界面
 
 import os
 import time
@@ -6,13 +6,10 @@ import tkinter
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 
-try:
-    from .st_connect import ASR, Synthesis
-except Exception:
-    from st_connect import ASR, Synthesis
+from .st_baiduai import ASR, Synthesis
 
 
-class SubWindow1(tkinter.Toplevel):
+class BaiduASR(tkinter.Toplevel):
     # 功能1：语音转文字
 
     def __init__(self, root, workDir, auths):
@@ -22,7 +19,7 @@ class SubWindow1(tkinter.Toplevel):
         self.auths = auths
         self.asr = None
 
-        self.title("语音转文字")
+        self.title("Baidu语音转文字")
         self.geometry("800x600+550+100")
         # self.attributes("-topmost", 1)
 
@@ -61,8 +58,8 @@ class SubWindow1(tkinter.Toplevel):
         self.text2.insert(tkinter.INSERT, self.string)
 
 
-class SubWindow2(tkinter.Toplevel):
-    # 功能1：文字转语音
+class BaiduSynthesis(tkinter.Toplevel):
+    # 功能2：文字转语音
 
     def __init__(self, root, workDir, auths):
         super().__init__()
@@ -74,7 +71,7 @@ class SubWindow2(tkinter.Toplevel):
         self.strdate = ""
         self.sound = None
 
-        self.title("文字转语音")
+        self.title("Baidu文字转语音")
         self.geometry("800x550+550+100")
         # self.attributes("-topmost", 1)
 
@@ -166,8 +163,8 @@ class SubWindow2(tkinter.Toplevel):
         self.mainloop()
 
 
-class SubWindow4(tkinter.Toplevel):
-    # 功能4：文字转语音
+class BaiduTranslate(tkinter.Toplevel):
+    # 功能4：语言翻译
 
     def __init__(self, root, workDir, auths):
         super().__init__()
@@ -179,7 +176,3 @@ class SubWindow4(tkinter.Toplevel):
         self.title("语言翻译")
         self.geometry("800x550+550+100")
         self.attributes("-topmost", 1)
-
-
-if __name__ == "__main__":
-    pass
