@@ -9,7 +9,7 @@ from tkinter.filedialog import askopenfilename
 from .st_baiduai import ASR, Synthesis
 
 
-class BaiduASR(tkinter.Toplevel):
+class BaiduASRUI(tkinter.Toplevel):
     # 功能1：语音转文字
 
     def __init__(self, root, workDir, auths):
@@ -58,7 +58,7 @@ class BaiduASR(tkinter.Toplevel):
         self.text2.insert(tkinter.INSERT, self.string)
 
 
-class BaiduSynthesis(tkinter.Toplevel):
+class BaiduSynthesisUI(tkinter.Toplevel):
     # 功能2：文字转语音
 
     def __init__(self, root, workDir, auths):
@@ -163,7 +163,7 @@ class BaiduSynthesis(tkinter.Toplevel):
         self.mainloop()
 
 
-class BaiduTranslate(tkinter.Toplevel):
+class BaiduTranslateUI(tkinter.Toplevel):
     # 功能4：语言翻译
 
     def __init__(self, root, workDir, auths):

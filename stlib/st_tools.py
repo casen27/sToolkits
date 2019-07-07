@@ -1,6 +1,11 @@
 # tools
+import os
+
+from PIL import Image
+
 
 class PicMixZip(object):
+    version = "1.0.0"
     _pics = {".png", ".jpg", ".jpeg", ".bmp"}
     _zips = {".zip", ".rar"}
 

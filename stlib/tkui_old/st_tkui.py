@@ -5,7 +5,7 @@ import tkinter
 from .st_config import CONFIG
 from .st_baiduai import ConnectBaidu
 from .st_tkui_menu import modifyMenubar
-from .st_tkui_baidu import BaiduASR, BaiduSynthesis, BaiduTranslate
+from .st_tkui_baidu import BaiduASRUI, BaiduSynthesisUI, BaiduTranslateUI
 
 
 class MainWindow(tkinter.Tk):
@@ -103,7 +103,7 @@ class MainWindow(tkinter.Tk):
         # 功能1：语音转文字
         if self.sub1.get() == 0:
             self.sub1.set(1)
-            sw = BaiduASR(self, self.workDir, self.auth1)
+            sw = BaiduASRUI(self, self.workDir, self.auth1)
             self.button1.wait_window(sw)
             self.sub1.set(0)
 
@@ -111,7 +111,7 @@ class MainWindow(tkinter.Tk):
         # 功能2：文字转语音
         if self.sub2.get() == 0:
             self.sub2.set(1)
-            sw = BaiduSynthesis(self, self.workDir, self.auth1)
+            sw = BaiduSynthesisUI(self, self.workDir, self.auth1)
             self.button2.wait_window(sw)
             self.sub2.set(0)
 
@@ -122,11 +122,11 @@ class MainWindow(tkinter.Tk):
         # 功能4：翻译
         if self.sub4.get() == 0:
             self.sub4.set(1)
-            sw = BaiduTranslate(self, self.workDir, self.auth2)
+            sw = BaiduTranslateUI(self, self.workDir, self.auth2)
             self.button4.wait_window(sw)
             self.sub4.set(0)
 
 
-def run_tkui(workDir):
+def run(workDir):
     mw = MainWindow(workDir=workDir)
     mw.run()

@@ -16,7 +16,7 @@ ECHO %fname%.py  °æ±¾ºÅ:%ver%
 GOTO :DOIT
 
 :DOIT
-SET icon=%fpath%stlib\%fname%.ico
+SET icon=%fpath%rc\%fname%.ico
 IF EXIST %icon% ( GOTO :Case_12 ) ELSE ( GOTO :Case_22 )
 GOTO :ENDCHECK
 
