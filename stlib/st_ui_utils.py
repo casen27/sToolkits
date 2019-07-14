@@ -1,10 +1,10 @@
-# pyqt5  hash计算、文件比对等的界面
+# pyqt5  扩展工具等的界面
 
 import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from .st_hash import File
+from .st_utils import CalcFileHash, PicMixZip
 
 
 class CalcFileHashUI(QtWidgets.QWidget):
@@ -18,7 +18,6 @@ class CalcFileHashUI(QtWidgets.QWidget):
         self.__initUI()
         self.__initActions()
         self.__initDatas()
-        QtCore.QMetaObject.connectSlotsByName(self)
 
     def __initUI(self):
         self.setObjectName("CalcFileHashUI")
@@ -145,6 +144,7 @@ class CalcFileHashUI(QtWidgets.QWidget):
         self.lineEdit_31 = QtWidgets.QLineEdit(self.layout_3)
         self.lineEdit_31.setGeometry(QtCore.QRect(40, 20, 430, 20))
         self.lineEdit_31.setObjectName("lineEdit_31")
+        self.lineEdit_31.setReadOnly(True)
         self.button_31 = QtWidgets.QPushButton(self.layout_3)
         self.button_31.setGeometry(QtCore.QRect(480, 20, 100, 23))
         self.button_31.setObjectName("button_31")
@@ -192,7 +192,7 @@ class CalcFileHashUI(QtWidgets.QWidget):
 
     def _button_31_clicked(self):
         # 选择文件
-        self.file, _ = QtWidgets.QFileDialog.getOpenFileName(self,"选择文件","","All files (*.*)")
+        self.file, _ = QtWidgets.QFileDialog.getOpenFileName(self, "选择文件", "", "All files (*.*)")
         # print(self.file)
         if os.path.isfile(self.file):
             self.__file_valid()  # 文件有效
@@ -200,19 +200,19 @@ class CalcFileHashUI(QtWidgets.QWidget):
             self.__file_invalid()  # 文件无效
 
     def __file_valid(self):
-        # 文件无效
+        # 文件有效
         self.lineEdit_31.setText(self.file)
         self.button_32.setEnabled(True)
         self.button_33.setEnabled(False)
         self.button_34.setEnabled(False)
-        self.info = File(file=self.file)
+        self.info = CalcFileHash(file=self.file)
         basic = self.info.basic()
-        self.lineEdit_11.setText(basic.get("path",""))
-        self.lineEdit_12.setText(basic.get("name",""))
-        self.lineEdit_13.setText(basic.get("size",""))
-        self.lineEdit_14.setText(basic.get("ctime",""))
-        self.lineEdit_15.setText(basic.get("atime",""))
-        self.lineEdit_16.setText(basic.get("mtime",""))
+        self.lineEdit_11.setText(basic.get("path", ""))
+        self.lineEdit_12.setText(basic.get("name", ""))
+        self.lineEdit_13.setText(basic.get("size", ""))
+        self.lineEdit_14.setText(basic.get("ctime", ""))
+        self.lineEdit_15.setText(basic.get("atime", ""))
+        self.lineEdit_16.setText(basic.get("mtime", ""))
         self.lineEdit_21.setText("")
         self.lineEdit_22.setText("")
         self.lineEdit_23.setText("")
@@ -236,18 +236,156 @@ class CalcFileHashUI(QtWidgets.QWidget):
         if self.checkBox_25.isChecked():
             needhash.add("sha512")
         hashes = self.info.hashes(needhash)
-        self.lineEdit_21.setText(hashes.get("md5",""))
-        self.lineEdit_22.setText(hashes.get("sha1",""))
-        self.lineEdit_23.setText(hashes.get("sha256",""))
-        self.lineEdit_24.setText(hashes.get("sha384",""))
-        self.lineEdit_25.setText(hashes.get("sha512",""))
+        self.lineEdit_21.setText(hashes.get("md5", ""))
+        self.lineEdit_22.setText(hashes.get("sha1", ""))
+        self.lineEdit_23.setText(hashes.get("sha256", ""))
+        self.lineEdit_24.setText(hashes.get("sha384", ""))
+        self.lineEdit_25.setText(hashes.get("sha512", ""))
         self.button_33.setEnabled(True)
         self.button_34.setEnabled(True)
 
     def _button_33_clicked(self):
         self.info.copyjson()
-        msgBox = QtWidgets.QMessageBox.about(self, "提示", "结果已经按json格式复制到剪切板中！")
+        QtWidgets.QMessageBox.about(self, "提示", "\n结果已经按json格式复制到剪切板中！\n")
 
     def _button_34_clicked(self):
         self.info.copytext()
-        msgBox = QtWidgets.QMessageBox.about(self, "提示", "结果已经按text格式复制到剪切板中！")
+        QtWidgets.QMessageBox.about(self, "提示", "\n结果已经按text格式复制到剪切板中！\n")
+
+
+class PicMixZipUI(QtWidgets.QWidget):
+    # 图片种子文件合成
+    version = "1.0.0"
+
+    def __init__(self):
+        super().__init__()
+        self.pic = ""
+        self.zip = ""
+        self.outpic = ""
+
+        self.__initUI()
+        self.__initActions()
+        self.__initDatas()
+
+    def __initUI(self):
+        self.setObjectName("PicMixZipUI")
+        self.setFixedSize(600, 300)
+        self.setWindowTitle("图片种子文件合成")
+
+        self.groupBox_1 = QtWidgets.QGroupBox(self)
+        self.groupBox_1.setGeometry(QtCore.QRect(10, 10, 580, 70))
+        self.groupBox_1.setObjectName("groupBox_1")
+        self.groupBox_1.setTitle("第一步：准备工作")
+        self.label_1 = QtWidgets.QLabel(self.groupBox_1)
+        self.label_1.setGeometry(QtCore.QRect(30, 20, 400, 15))
+        self.label_1.setObjectName("label_1")
+        self.label_1.setText("1、准备好图片（*.png；*.jpg；*.bmp）")
+        self.label_2 = QtWidgets.QLabel(self.groupBox_1)
+        self.label_2.setGeometry(QtCore.QRect(30, 40, 400, 15))
+        self.label_2.setObjectName("label_2")
+        self.label_2.setText("2、将种子文件用压缩工具打包（*.zip；*.rar）")
+
+        self.groupBox_2 = QtWidgets.QGroupBox(self)
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 90, 580, 70))
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.groupBox_2.setTitle("第二步：选择图片文件")
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.groupBox_2)
+        self.lineEdit_2.setGeometry(QtCore.QRect(10, 25, 470, 20))
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setReadOnly(True)
+        self.button_2 = QtWidgets.QPushButton(self.groupBox_2)
+        self.button_2.setGeometry(QtCore.QRect(490, 25, 80, 25))
+        self.button_2.setObjectName("button_2")
+        self.button_2.setText("浏览...")
+
+        self.groupBox_3 = QtWidgets.QGroupBox(self)
+        self.groupBox_3.setGeometry(QtCore.QRect(10, 180, 580, 70))
+        self.groupBox_3.setObjectName("groupBox_3")
+        self.groupBox_3.setTitle("第三步：选择压缩包")
+        self.lineEdit_3 = QtWidgets.QLineEdit(self.groupBox_3)
+        self.lineEdit_3.setGeometry(QtCore.QRect(10, 25, 470, 20))
+        self.lineEdit_3.setObjectName("lineEdit_3")
+        self.lineEdit_3.setReadOnly(True)
+        self.button_3 = QtWidgets.QPushButton(self.groupBox_3)
+        self.button_3.setGeometry(QtCore.QRect(490, 25, 80, 25))
+        self.button_3.setObjectName("button_3")
+        self.button_3.setText("浏览...")
+
+        self.button_0 = QtWidgets.QPushButton(self)
+        self.button_0.setFont(QtGui.QFont("", 16))
+        self.button_0.setGeometry(QtCore.QRect(250, 260, 120, 30))
+        self.button_0.setObjectName("button_0")
+        self.button_0.setText("生成文件")
+        self.button_0.setEnabled(False)
+
+    def __initActions(self):
+        self.button_2.clicked.connect(self._button_2_clicked)
+        self.button_3.clicked.connect(self._button_3_clicked)
+        self.button_0.clicked.connect(self._button_0_clicked)
+
+    def __initDatas(self):
+        pass
+
+    def _button_2_clicked(self):
+        # 选择图片文件
+        self.pic, _ = QtWidgets.QFileDialog.getOpenFileName(self, "选择图片文件", "", "Image files (*.png;*.jpg;*jpeg;*.bmp)")
+        # print(self.pic)
+        if os.path.isfile(self.pic):
+            self.lineEdit_2.setText(self.pic)
+            self.__both_valid()
+        else:
+            self.lineEdit_2.setText("")
+            self.__both_valid()
+
+    def _button_3_clicked(self):
+        # 选择压缩文件
+        self.zip, _ = QtWidgets.QFileDialog.getOpenFileName(self, "选择压缩文件", "", "Zipped files (*.zip;*.rar)")
+        # print(self.zip)
+        if os.path.isfile(self.zip):
+            self.lineEdit_3.setText(self.zip)
+            self.__both_valid()
+        else:
+            self.lineEdit_3.setText("")
+            self.__both_valid()
+
+    def __both_valid(self):
+        if self.pic and self.zip:
+            self.button_0.setEnabled(True)
+        else:
+            self.button_0.setEnabled(False)
+
+    def __check_pic(self):
+        pic_base = os.path.basename(self.pic)
+        pic_name = pic_base.split(".")[0]
+
+        zip_base = os.path.basename(self.zip)
+        zip_name = zip_base.split(".")[0]
+
+        ext = os.path.splitext(self.pic)[1]
+        if ext.lower() == ".png":
+            type = "Image file (*.png)"
+        elif ext.lower() == ".jpg":
+            type = "Image file (*.jpg)"
+        elif ext.lower() == ".jpeg":
+            type = "Image file (*.jpg)"
+        elif ext.lower() == ".bmp":
+            type = "Image file (*.bmp)"
+        else:
+            type = "All files (*.*)"
+
+        output_default = pic_name + "_" + zip_name + ext
+        return output_default, type
+
+    def _button_0_clicked(self):
+        name, type = self.__check_pic()
+        self.outpic, _ = QtWidgets.QFileDialog.getSaveFileName(self, "保存文件", name, type)
+        if self.outpic:
+            self.__save_output()
+        if os.path.isfile(self.outpic):
+            QtWidgets.QMessageBox.about(self, "提示", "\n合成成功！\n")
+        else:
+            QtWidgets.QMessageBox.critical(self, "警告", "\n合成失败！\n")
+
+    def __save_output(self):
+        pmz = PicMixZip(pic=self.pic, zip=self.zip, store=self.outpic)
+        pmz.run()

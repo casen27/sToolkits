@@ -2,7 +2,7 @@
 
 DEFAULT_CONFIG = {
         "BAIDU_DEFAULT": {
-                "appid": "",
+                # "appid": "",
                 "apikey": "",
                 "secretkey": ""
                 },

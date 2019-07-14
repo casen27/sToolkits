@@ -13,46 +13,49 @@ import requests
 from aip import AipSpeech
 
 
-class ConnectBaidu(object):
+class BaiduConnect(object):
     # 链接测试网络状况、账号密码是否可用
     version = "1.0.0"
+
+    @classmethod
+    def connect(cls, auths):
+        # test 虚假链接成功
+        return True
 
     @classmethod
     def connect1(cls, auths):
         # 测试链接：语音转文字、文字转语音、图片OCR
         try:
-            sy = Synthesis(auths, "百度")
+            sy = BaiduSynthesis(auths, "百度")
             result = sy.run()
-            print("百度语音文字OCR链接成功")
-        except Exception as e:
+        except:
             result = {}
-            # print(e)
-            print("百度语音文字OCR链接失败")
         if isinstance(result, dict):
             # 链接失败
+            print("百度语音文字OCR链接失败")
             return False
         else:
             # 链接成功，声音的二进制文件
+            print("百度语音文字OCR链接成功")
             return True
 
     @classmethod
     def connect2(cls, auths):
         # 测试链接：翻译
         try:
-            t = Translate(auths=auths, text="English")
+            t = BaiduTranslate(auths=auths, params={"text": "English", "_return": 0})
             result = t.run()
-            print("百度翻译链接成功")
-        except Exception as e:
+        except:
             result = ""
-            # print(e)
-            print("百度翻译链接失败")
         if result == "英语":
+            print("百度翻译链接成功")
             return True
         else:
+            print("百度翻译链接失败")
             return False
 
 
-class ASR(object):
+class BaiduASR(object):
     # 声音文件转字符串
     version = "1.0.0"
 
@@ -60,28 +63,26 @@ class ASR(object):
         self.workDir = workDir
         self.file = file
         self.auths = {}
-        self.auths["appId"] = auths["appid"]
+        # self.auths["appId"] = auths["appid"]
+        self.auths["appId"] = ""
         self.auths["apiKey"] = auths["apikey"]
         self.auths["secretKey"] = auths["secretkey"]
         self.client = AipSpeech(**self.auths)
 
     def run(self):
-        with open(self.file, 'rb') as fp:
+        with open(self.file, "rb") as fp:
             rb = fp.read()
         ext = os.path.splitext(self.file)[1].lstrip(".")
         datas = self.client.asr(rb, ext)
-        # print(datas)
         if datas.get("err_msg") == "success.":
             res = datas.get("result", "")
             str0 = res[0]
         else:
             str0 = json.dumps(datas, ensure_ascii=False)
-        # print(str0)
         return str0
 
-
     """
-    Synthesis
+    BaiduSynthesis
     options参数    可需  描述
     tex  必填  合成的文本，使用UTF-8编码。小于2048个中文字或者英文数字。（文本在百度服务器内转换为GBK后，长度必须小于4096字节）
     tok  必填  开放平台获取到的开发者access_token（见上面的“鉴权认证机制”段落）
@@ -96,16 +97,16 @@ class ASR(object):
     """
 
 
-class Synthesis(object):
+class BaiduSynthesis(object):
     # 字符串合成语音文件
     version = "1.0.0"
 
     def __init__(self, auths, text, options={}):
         self.auths = {}
-        self.auths["appId"] = auths["appid"]
+        # self.auths["appId"] = auths["appid"]
+        self.auths["appId"] = ""
         self.auths["apiKey"] = auths["apikey"]
         self.auths["secretKey"] = auths["secretkey"]
-        # print(self.auths)
         self.client = AipSpeech(**self.auths)
         self.text = text
         self.options = options
@@ -140,26 +141,55 @@ class Synthesis(object):
                 else:
                     self.options2[k] = 3
             else:
-                pass  # 多余参数扔掉
+                pass
 
     def run(self):
-        result = self.client.synthesis(text=self.text, options=self.options2)
+        try:
+            result = self.client.synthesis(text=self.text, options=self.options2)
+        except:
+            result = {"error_code": "0", "error_msg": "未知错误，检测网络链接、Keys是否有效"}
         return result
 
 
-class Translate(object):
+class BaiduTranslate(object):
+    # 翻译
+    # 百度官方技术说明
+    # http://api.fanyi.baidu.com/api/trans/product/apidoc
     version = "1.0.0"
-    url = "http://api.fanyi.baidu.com/api/trans/vip/translate"
+    url = "http://api.fanyi.baidu.com/api/trans/vip/translate"  # 接口
+    lang_support = {"zh", "en", "yue", "wyw", "jp", "kor", "fra", "spa", "ru", "cht"}  # 更多语言查看技术文档
+    q = ""
+    fromlang = "auto"
+    tolang = "zh"
+    sign = ""
+    _return = 0  # 返回上一层方式，1返回json.dumps字符串，0返回json解析后的译文字符串
+    params2 = {}
 
-    def __init__(self, auths, text, params={}):
-        self.appid = auths["appid"]
-        self.secretKey = auths["secretkey"]
-        self.q = text
-        self.fromlang = params.get("en", "en")
-        self.tolang = params.get("zh", "zh")
+    def __init__(self, auths, params={}):
+        self.appid = auths.get("appid", "")
+        self.secretKey = auths.get("secretkey", "")
+        self.params = params
         self.salt = str(int(time.time()))
-        self.sign = ""
-        self.params2 = {}
+        self._check_params()
+
+    def _check_params(self):
+        # params={"text": "原始文本", "from":"zh", "to":"en", "_return": 0}
+        fromlang = self.params.get("from")
+        if fromlang in self.lang_support:
+            self.fromlang = fromlang
+        tolang = self.params.get("to")
+        if tolang in self.lang_support:
+            self.tolang = tolang
+        text = self.params.get("text")
+        if isinstance(text, str):
+            self.q = text
+        else:
+            self.q = ""
+        _return = self.params.get("_return")
+        if _return in {0, 1}:
+            self._return = _return
+        else:
+            self._return = 0
 
     def _get_sign(self):
         string = self.appid + self.q + self.salt + self.secretKey
@@ -167,7 +197,7 @@ class Translate(object):
         m.update(string.encode())
         self.sign = m.hexdigest()
 
-    def _redo_params(self):
+    def _pack_params(self):
         self.params2 = {
                 "appid": self.appid,
                 "q": self.q,
@@ -179,9 +209,23 @@ class Translate(object):
 
     def run(self):
         self._get_sign()
-        self._redo_params()
-        res = requests.get(self.url, params=self.params2)
-        datas = json.loads(res.content)
-        # {'from': 'en', 'to': 'zh', 'trans_result': [{'src': 'English', 'dst': '英语'}]}
-        result = datas["trans_result"][0]["dst"]
-        return result
+        self._pack_params()
+        try:
+            res = requests.get(self.url, params=self.params2)
+            datas = json.loads(res.content)
+        except:
+            # {'error_code': '52003', 'error_msg': 'UNAUTHORIZED USER'}
+            datas = {"error_code": "0", "error_msg": "未知错误，检测网络链接、Keys是否有效"}
+
+        # http_response = {"from": "en", "to": "zh", "trans_result": [{"src": "English", "dst": "英语"}]}
+        if self._return == 0:
+            try:
+                trans_result = datas.get("trans_result", "")
+                if isinstance(trans_result, list):
+                    li = []
+                    for res in trans_result:
+                        li.append(res["dst"])
+                    return "\n".join(li)
+            except:
+                pass
+        return json.dumps(datas, ensure_ascii=False, indent=4)

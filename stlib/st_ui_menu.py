@@ -7,8 +7,8 @@ menu_help_about      HelpAboutUI
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from .st_baidu import BaiduConnect
 from .st_config import CONFIG
-from .st_baiduai import ConnectBaidu
 from .st_settings import AboutHTML, BAIDU_AI_KEYS_URL, ProjectURL
 
 
@@ -62,45 +62,45 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.setWindowTitle("百度AI Key设置")
 
         self.groupBox_1 = QtWidgets.QGroupBox(self)
-        self.groupBox_1.setGeometry(QtCore.QRect(10, 10, 460, 110))
+        self.groupBox_1.setGeometry(QtCore.QRect(10, 10, 460, 80))
         self.groupBox_1.setTitle("语音转文字、文字转语音、截图文字识别")
         self.layout_1 = QtWidgets.QWidget(self.groupBox_1)
         self.layout_1.setGeometry(QtCore.QRect(10, 20, 330, 80))
         self.fLayout_1 = QtWidgets.QFormLayout(self.layout_1)
         self.fLayout_1.setContentsMargins(0, 0, 0, 0)
-        self.label_111 = QtWidgets.QLabel(self.layout_1)
-        self.label_111.setText("appId")
+        # self.label_111 = QtWidgets.QLabel(self.layout_1)
+        # self.label_111.setText("appId")
         self.label_112 = QtWidgets.QLabel(self.layout_1)
         self.label_112.setText("apiKey")
         self.label_113 = QtWidgets.QLabel(self.layout_1)
         self.label_113.setText("secretKey")
-        self.lineEdit_121 = QtWidgets.QLineEdit(self.layout_1)
+        # self.lineEdit_121 = QtWidgets.QLineEdit(self.layout_1)
         self.lineEdit_122 = QtWidgets.QLineEdit(self.layout_1)
         self.lineEdit_123 = QtWidgets.QLineEdit(self.layout_1)
-        self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_111)
-        self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_121)
-        self.fLayout_1.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_112)
-        self.fLayout_1.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_122)
-        self.fLayout_1.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_113)
-        self.fLayout_1.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_123)
+        # self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_111)
+        # self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_121)
+        self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_112)
+        self.fLayout_1.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_122)
+        self.fLayout_1.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_113)
+        self.fLayout_1.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_123)
 
         self.label_131 = QtWidgets.QLabel(self.groupBox_1)
-        self.label_131.setGeometry(QtCore.QRect(360, 30, 80, 20))
+        self.label_131.setGeometry(QtCore.QRect(360, 10, 80, 20))
         self.label_131.setAlignment(QtCore.Qt.AlignCenter)
         self.label_131.setText("未检测")
         self.button_131 = QtWidgets.QPushButton(self.groupBox_1)
-        self.button_131.setGeometry(QtCore.QRect(360, 60, 80, 23))
+        self.button_131.setGeometry(QtCore.QRect(360, 40, 80, 23))
         self.button_131.setText("检测")
 
         self.groupBox_2 = QtWidgets.QGroupBox(self)
-        self.groupBox_2.setGeometry(QtCore.QRect(10, 130, 460, 80))
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 100, 460, 80))
         self.groupBox_2.setTitle("翻译")
         self.layout_2 = QtWidgets.QWidget(self.groupBox_2)
         self.layout_2.setGeometry(QtCore.QRect(10, 20, 330, 50))
         self.fLayout_2 = QtWidgets.QFormLayout(self.layout_2)
         self.fLayout_2.setContentsMargins(0, 0, 0, 0)
         self.label_211 = QtWidgets.QLabel(self.layout_2)
-        self.label_211.setText("apiKey")
+        self.label_211.setText("appid")
         self.label_212 = QtWidgets.QLabel(self.layout_2)
         self.label_212.setText("secretKey")
         self.lineEdit_221 = QtWidgets.QLineEdit(self.layout_2)
@@ -130,14 +130,14 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.button_12.clicked.connect(self._save_and_back)
         self.button_131.clicked.connect(self._check_key_131)
         self.button_231.clicked.connect(self._check_key_231)
-        self.lineEdit_121.textChanged.connect(self._auth1_changed)
+        # self.lineEdit_121.textChanged.connect(self._auth1_changed)
         self.lineEdit_122.textChanged.connect(self._auth1_changed)
         self.lineEdit_123.textChanged.connect(self._auth1_changed)
         self.lineEdit_221.textChanged.connect(self._auth2_changed)
         self.lineEdit_222.textChanged.connect(self._auth2_changed)
 
     def __initDatas(self):
-        self.lineEdit_121.setText(self.auths["BAIDU_DEFAULT"]["appid"])
+        # self.lineEdit_121.setText(self.auths["BAIDU_DEFAULT"]["appid"])
         self.lineEdit_122.setText(self.auths["BAIDU_DEFAULT"]["apikey"])
         self.lineEdit_123.setText(self.auths["BAIDU_DEFAULT"]["secretkey"])
         self.lineEdit_221.setText(self.auths["BAIDU_TRANSLATE"]["appid"])
@@ -148,7 +148,7 @@ class SettingKeysUI(QtWidgets.QWidget):
 
     def _save_and_back(self):
         # save ini
-        self.auths["BAIDU_DEFAULT"]["appid"] = self.lineEdit_121.text()
+        # self.auths["BAIDU_DEFAULT"]["appid"] = self.lineEdit_121.text()
         self.auths["BAIDU_DEFAULT"]["apikey"] = self.lineEdit_122.text()
         self.auths["BAIDU_DEFAULT"]["secretkey"] = self.lineEdit_123.text()
         self.auths["BAIDU_TRANSLATE"]["appid"] = self.lineEdit_221.text()
@@ -165,10 +165,10 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.label_231.setText("待检测")
 
     def _check_key_131(self):
-        self.auths["BAIDU_DEFAULT"]["appid"] = self.lineEdit_121.text()
+        # self.auths["BAIDU_DEFAULT"]["appid"] = self.lineEdit_121.text()
         self.auths["BAIDU_DEFAULT"]["apikey"] = self.lineEdit_122.text()
         self.auths["BAIDU_DEFAULT"]["secretkey"] = self.lineEdit_123.text()
-        if ConnectBaidu.connect1(self.auths["BAIDU_DEFAULT"]):
+        if BaiduConnect.connect1(self.auths["BAIDU_DEFAULT"]):
             self.label_131.setText("有效")
         else:
             self.label_131.setText("无效")
@@ -176,7 +176,7 @@ class SettingKeysUI(QtWidgets.QWidget):
     def _check_key_231(self):
         self.auths["BAIDU_TRANSLATE"]["appid"] = self.lineEdit_221.text()
         self.auths["BAIDU_TRANSLATE"]["secretkey"] = self.lineEdit_222.text()
-        if ConnectBaidu.connect2(self.auths["BAIDU_TRANSLATE"]):
+        if BaiduConnect.connect2(self.auths["BAIDU_TRANSLATE"]):
             self.label_231.setText("有效")
         else:
             self.label_231.setText("无效")

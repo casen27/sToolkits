@@ -3,7 +3,7 @@
 import tkinter
 
 from .st_config import CONFIG
-from .st_baiduai import ConnectBaidu
+from .st_baidu import BaiduConnect
 from .st_tkui_menu import modifyMenubar
 from .st_tkui_baidu import BaiduASRUI, BaiduSynthesisUI, BaiduTranslateUI
 
@@ -89,12 +89,12 @@ class MainWindow(tkinter.Tk):
 
     def _check_auths(self):
         self._disable_all()
-        if ConnectBaidu.connect1(self.auth1):
+        if BaiduConnect.connect1(self.auth1):
             self.status1.set("语音图文API：已链接")
             # 激活相关功能
             self.button1.config(state=tkinter.ACTIVE)
             self.button2.config(state=tkinter.ACTIVE)
-        if ConnectBaidu.connect2(self.auth2):
+        if BaiduConnect.connect2(self.auth2):
             self.status2.set("文字翻译API：已链接")
             # 激活相关功能
             self.button4.config(state=tkinter.ACTIVE)

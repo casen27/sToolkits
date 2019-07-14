@@ -6,7 +6,7 @@ import tkinter
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 
-from .st_baiduai import ASR, Synthesis
+from .st_baidu import BaiduASR, BaiduSynthesis
 
 
 class BaiduASRUI(tkinter.Toplevel):

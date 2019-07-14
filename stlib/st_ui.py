@@ -2,14 +2,13 @@
 
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
-from .st_baiduai import ConnectBaidu
+from .st_baidu import BaiduConnect
 from .st_config import CONFIG
-from .st_ui_baidu import BaiduASRUI, BaiduSynthesisUI
-from .st_ui_color import ColorBoardUI
-from .st_ui_gif import GIFSpliterUI
-from .st_ui_hash import CalcFileHashUI
+from .st_ui_baidu import BaiduASRUI, BaiduSynthesisUI, BaiduTranslateUI
+from .st_ui_utils import CalcFileHashUI, PicMixZipUI
+from .st_ui_images import ColorBoardUI, GIFSpliterUI
 from .st_ui_menu import HelpAboutUI, SettingKeysUI
 
 
@@ -28,8 +27,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__initTab_all()
         self.__initActions()
         self.__initDatas()
-
-        QtCore.QMetaObject.connectSlotsByName(self)
 
     def __initUI(self):
         self.setFixedSize(520, 360)  # 固定大小
@@ -86,9 +83,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tabWidget.addTab(self.tab_20, "")
         self.tabWidget.addTab(self.tab_30, "")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_00), "百度AI")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), "图形工具")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), "图像工具")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_20), "媒体工具")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_30), "哈希工具")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_30), "杂类工具")
         self.tabWidget.setCurrentIndex(0)
 
     def __initTab_t00(self):
@@ -184,7 +181,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button_31.setText("文件哈希值")
         self.button_32 = QtWidgets.QPushButton(self.widget_30)
         self.button_32.setObjectName("button_32")
-        self.button_32.setText("按钮32")
+        self.button_32.setText("图片种子合成")
         self.button_33 = QtWidgets.QPushButton(self.widget_30)
         self.button_33.setObjectName("button_33")
         self.button_33.setText("按钮33")
@@ -204,19 +201,21 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menu_help_about.triggered.connect(self._menu_help_about)
         self.button_01.clicked.connect(self._button_01_clicked)
         self.button_02.clicked.connect(self._button_02_clicked)
+        self.button_04.clicked.connect(self._button_04_clicked)
         self.button_0a.clicked.connect(self._fresh_connect_baidu)
         self.button_0b.clicked.connect(self._menu_setting_keys)
         self.button_11.clicked.connect(self._button_11_clicked)
         self.button_12.clicked.connect(self._button_12_clicked)
         self.button_31.clicked.connect(self._button_31_clicked)
+        self.button_32.clicked.connect(self._button_32_clicked)
 
     def __initDatas(self):
-        self.statusbar.showMessage("准备就绪",5000)
+        self.statusbar.showMessage("欢迎使用**小工具箱", 3000)
         self._disable_baidu_all()
         self._get_baidu_auths()
 
     def _menu_setting_keys(self):
-        self._ui_setting_keys = SettingKeysUI(workDir=self.workDir,auths=self.auths)
+        self._ui_setting_keys = SettingKeysUI(workDir=self.workDir, auths=self.auths)
         self._ui_setting_keys.signal_close.connect(self._fresh_connect_baidu)
         self._ui_setting_keys.show()
 
@@ -230,7 +229,6 @@ class MainWindow(QtWidgets.QMainWindow):
         tokens1 = self.auths["BAIDU_DEFAULT"]
         tokens2 = self.auths["BAIDU_TRANSLATE"]
         self.auth1 = {
-                "appid": tokens1["appid"],
                 "apikey": tokens1["apikey"],
                 "secretkey": tokens1["secretkey"]
                 }
@@ -249,12 +247,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _check_baidu_auths(self):
         self._disable_baidu_all()
-        if ConnectBaidu.connect1(self.auth1):
+        if BaiduConnect.connect1(self.auth1):
             self.label_01.setText("语音图文API：已链接")
             # 激活相关功能
             self.button_01.setEnabled(True)
             self.button_02.setEnabled(True)
-        if ConnectBaidu.connect2(self.auth2):
+        if BaiduConnect.connect2(self.auth2):
             self.label_02.setText("文字翻译API：已链接")
             # 激活相关功能
             self.button_04.setEnabled(True)
@@ -264,12 +262,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self._check_baidu_auths()
 
     def _button_01_clicked(self):
-        self._ui_baidusar = BaiduASRUI(workDir=self.workDir,auths=self.auth1)
-        self._ui_baidusar.show()
+        self._ui_baidu_asr = BaiduASRUI(workDir=self.workDir, auths=self.auth1)
+        self._ui_baidu_asr.show()
 
     def _button_02_clicked(self):
-        self._ui_baidusyn = BaiduSynthesisUI(workDir=self.workDir,auths=self.auth2)
-        self._ui_baidusyn.show()
+        self._ui_baidu_syn = BaiduSynthesisUI(workDir=self.workDir, auths=self.auth1)
+        self._ui_baidu_syn.show()
+
+    def _button_04_clicked(self):
+        self._ui_baidu_tsl = BaiduTranslateUI(workDir=self.workDir, auths=self.auth2)
+        self._ui_baidu_tsl.show()
 
     def _button_11_clicked(self):
         self._ui_colorboard = ColorBoardUI()
@@ -282,6 +284,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def _button_31_clicked(self):
         self._ui_filehash = CalcFileHashUI()
         self._ui_filehash.show()
+
+    def _button_32_clicked(self):
+        self._ui_pmz = PicMixZipUI()
+        self._ui_pmz.show()
 
 def run(workDir):
     app = QtWidgets.QApplication(sys.argv)
