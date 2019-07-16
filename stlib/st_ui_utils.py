@@ -1,8 +1,8 @@
-# pyqt5  扩展工具等的界面
+# 扩展工具等的界面
 
 import os
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 from .st_utils import CalcFileHash, PicMixZip
 

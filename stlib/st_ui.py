@@ -1,8 +1,8 @@
-# pyqt5 主界面
+# 主界面
 
 import sys
 
-from PyQt5 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets
 
 from .st_baidu import BaiduConnect
 from .st_config import CONFIG

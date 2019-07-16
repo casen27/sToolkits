@@ -1,8 +1,8 @@
-# pyqt5  baidu  子功能的界面
+# baidu  子功能的界面
 
 import os
 
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PySide2 import QtCore, QtWidgets, QtGui
 
 from .st_baidu import BaiduASR, BaiduSynthesis, BaiduTranslate
 
@@ -179,8 +179,8 @@ class BaiduSynthesisUI(QtWidgets.QWidget):
 
 class BaiduTranslateUI(QtWidgets.QWidget):
     version = "1.0.5"
-    # signal_1 = QtCore.pyqtSignal()
-    # signal_2 = QtCore.pyqtSignal(int)
+    # signal_1 = QtCore.Signal()
+    # signal_2 = QtCore.Signal(int)
     # self.signal_1.emit()
     fromlang_support = [
                         ("auto","自动识别"),

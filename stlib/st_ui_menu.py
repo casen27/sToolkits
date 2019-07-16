@@ -1,11 +1,11 @@
-# pyqt5 菜单栏的全部配置
+# 菜单栏的全部配置
 
 """
 menu_setting_keys    SettingKeysUI
 menu_help_about      HelpAboutUI
 """
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 from .st_baidu import BaiduConnect
 from .st_config import CONFIG
@@ -46,7 +46,7 @@ class HelpAboutUI(QtWidgets.QWidget):
 
 class SettingKeysUI(QtWidgets.QWidget):
     version = "1.0.0"
-    signal_close = QtCore.pyqtSignal()
+    signal_close = QtCore.Signal()
 
     def __init__(self, workDir, auths):
         super().__init__()

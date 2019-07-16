@@ -1,6 +1,6 @@
 # Swack Toolkits
 
-小工具合集，GUI主要使用PyQt5
+小工具合集，GUI主要使用PySide2
 
 
 ## 百度AI工具箱

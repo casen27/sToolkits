@@ -1,8 +1,8 @@
-# pyqt5  gif处理子功能的界面
+# gif处理子功能的界面
 
 import os
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 from .st_images import GIFSpliter
 
@@ -35,55 +35,51 @@ class ColorBoardUI(QtWidgets.QWidget):
         self.lineEdit.setFont(QtGui.QFont("", 16))
         self.lineEdit.setReadOnly(True)
 
-        # self.brush = QtGui.QBrush()
+        self.widget_1 = QtWidgets.QWidget(self)
+        self.widget_1.setGeometry(QtCore.QRect(10, 140, 300, 150))
+        self.gLayout_1 = QtWidgets.QGridLayout(self.widget_1)
+        self.gLayout_1.setContentsMargins(0, 0, 0, 0)
 
-        self.widget = QtWidgets.QWidget(self)
-        self.widget.setGeometry(QtCore.QRect(10, 140, 300, 90))
-        self.gLayout = QtWidgets.QGridLayout(self.widget)
-        self.gLayout.setContentsMargins(0, 0, 0, 0)
-
-        self.label_r = QtWidgets.QLabel(self.widget)
-        self.label_g = QtWidgets.QLabel(self.widget)
-        self.label_b = QtWidgets.QLabel(self.widget)
-        self.slider_r = QtWidgets.QSlider(self.widget)
+        self.label_r = QtWidgets.QLabel(self.widget_1)
+        self.label_g = QtWidgets.QLabel(self.widget_1)
+        self.label_b = QtWidgets.QLabel(self.widget_1)
+        self.slider_r = QtWidgets.QSlider(self.widget_1)
         self.slider_r.setMinimum(0)
         self.slider_r.setMaximum(255)
         self.slider_r.setOrientation(QtCore.Qt.Horizontal)
-        self.slider_g = QtWidgets.QSlider(self.widget)
+        self.slider_g = QtWidgets.QSlider(self.widget_1)
         self.slider_g.setMinimum(0)
         self.slider_g.setMaximum(255)
         self.slider_g.setOrientation(QtCore.Qt.Horizontal)
-        self.slider_b = QtWidgets.QSlider(self.widget)
+        self.slider_b = QtWidgets.QSlider(self.widget_1)
         self.slider_b.setMinimum(0)
         self.slider_b.setMaximum(255)
         self.slider_b.setOrientation(QtCore.Qt.Horizontal)
-        self.lcd_r = QtWidgets.QLCDNumber(self.widget)
+        self.lcd_r = QtWidgets.QLCDNumber(self.widget_1)
         self.lcd_r.setSegmentStyle(QtWidgets.QLCDNumber.Flat)  # Mac系统需要加上，否则下面的color不生效。
         self.lcd_r.setStyleSheet("border: 1px solid black; color:red;")
-        self.lcd_g = QtWidgets.QLCDNumber(self.widget)
+        self.lcd_g = QtWidgets.QLCDNumber(self.widget_1)
         self.lcd_g.setSegmentStyle(QtWidgets.QLCDNumber.Flat)
         self.lcd_g.setStyleSheet("border: 1px solid black; color:green;")
-        self.lcd_b = QtWidgets.QLCDNumber(self.widget)
+        self.lcd_b = QtWidgets.QLCDNumber(self.widget_1)
         self.lcd_b.setSegmentStyle(QtWidgets.QLCDNumber.Flat)
         self.lcd_b.setStyleSheet("border: 1px solid black; color:blue;")
-        self.gLayout.addWidget(self.label_r, 0, 0, 1, 1)
-        self.gLayout.addWidget(self.slider_r, 0, 1, 1, 1)
-        self.gLayout.addWidget(self.lcd_r, 0, 2, 1, 1)
-        self.gLayout.addWidget(self.label_g, 1, 0, 1, 1)
-        self.gLayout.addWidget(self.slider_g, 1, 1, 1, 1)
-        self.gLayout.addWidget(self.lcd_g, 1, 2, 1, 1)
-        self.gLayout.addWidget(self.label_b, 2, 0, 1, 1)
-        self.gLayout.addWidget(self.slider_b, 2, 1, 1, 1)
-        self.gLayout.addWidget(self.lcd_b, 2, 2, 1, 1)
-
-        self.checkBox_1 = QtWidgets.QCheckBox(self)
+        self.checkBox_1 = QtWidgets.QCheckBox(self.widget_1)
         self.checkBox_1.setText("灰度锁定")
-        self.checkBox_1.setGeometry(QtCore.QRect(10, 230, 300, 23))
         self.checkBox_1.setChecked(False)
-
-        self.label_1 = QtWidgets.QLabel(self)
-        self.label_1.setGeometry(QtCore.QRect(10, 260, 300, 23))
-        self.label_1.setText("（提示：拖动滑块到大概位置，按 ← → 键可以微调）")
+        self.label_1 = QtWidgets.QLabel(self.widget_1)
+        self.label_1.setText("（提示：拖动滑块到大概位置，按方向键可以微调）")
+        self.gLayout_1.addWidget(self.label_r,  0, 0, 1, 1)
+        self.gLayout_1.addWidget(self.slider_r, 0, 1, 1, 5)
+        self.gLayout_1.addWidget(self.lcd_r,    0, 6, 1, 1)
+        self.gLayout_1.addWidget(self.label_g,  1, 0, 1, 1)
+        self.gLayout_1.addWidget(self.slider_g, 1, 1, 1, 5)
+        self.gLayout_1.addWidget(self.lcd_g,    1, 6, 1, 1)
+        self.gLayout_1.addWidget(self.label_b,  2, 0, 1, 1)
+        self.gLayout_1.addWidget(self.slider_b, 2, 1, 1, 5)
+        self.gLayout_1.addWidget(self.lcd_b,    2, 6, 1, 1)
+        self.gLayout_1.addWidget(self.checkBox_1, 3, 1, 1, 2)
+        self.gLayout_1.addWidget(self.label_1, 4, 0, 1, 7)
 
     def __initActions(self):
         self.slider_r.valueChanged[int].connect(self._slider_r_changed)
