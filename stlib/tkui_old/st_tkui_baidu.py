@@ -12,10 +12,10 @@ from .st_baidu import BaiduASR, BaiduSynthesis
 class BaiduASRUI(tkinter.Toplevel):
     # 功能1：语音转文字
 
-    def __init__(self, root, workDir, auths):
+    def __init__(self, root, work_dir, auths):
         super().__init__()
         self.root = root
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
         self.asr = None
 
@@ -49,7 +49,7 @@ class BaiduASRUI(tkinter.Toplevel):
 
     def _button2_click(self):
         if self.fullpath:
-            self.asr = ASR(self.workDir, self.fullpath, self.auths)
+            self.asr = ASR(self.work_dir, self.fullpath, self.auths)
         if self.asr:
             self.string = self.asr.run()
         else:
@@ -61,10 +61,10 @@ class BaiduASRUI(tkinter.Toplevel):
 class BaiduSynthesisUI(tkinter.Toplevel):
     # 功能2：文字转语音
 
-    def __init__(self, root, workDir, auths):
+    def __init__(self, root, work_dir, auths):
         super().__init__()
         self.root = root
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
         self.options = {}
 
@@ -154,7 +154,7 @@ class BaiduSynthesisUI(tkinter.Toplevel):
     def _button2_click(self):
         # 储存声音文件
         file = self.strdate + ".mp3"
-        fullpath = os.path.join(self.workDir, file)
+        fullpath = os.path.join(self.work_dir, file)
         if not isinstance(self.sound, dict):
             with open(fullpath, 'wb') as fp:
                 fp.write(self.sound)
@@ -166,10 +166,10 @@ class BaiduSynthesisUI(tkinter.Toplevel):
 class BaiduTranslateUI(tkinter.Toplevel):
     # 功能4：语言翻译
 
-    def __init__(self, root, workDir, auths):
+    def __init__(self, root, work_dir, auths):
         super().__init__()
         self.root = root
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
         self.params = {}
 

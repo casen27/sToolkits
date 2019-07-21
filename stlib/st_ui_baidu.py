@@ -11,9 +11,9 @@ class BaiduASRUI(QtWidgets.QWidget):
     # 语音转文字
     version = "1.0.0"
 
-    def __init__(self, workDir, auths):
+    def __init__(self, work_dir, auths):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
         self.file = ""
 
@@ -97,9 +97,9 @@ class BaiduSynthesisUI(QtWidgets.QWidget):
     # 文字转语音
     version = "1.0.0"
 
-    def __init__(self, workDir, auths):
+    def __init__(self, work_dir, auths):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
 
         self.__initUI()
@@ -203,9 +203,9 @@ class BaiduTranslateUI(QtWidgets.QWidget):
     text_original = ""
     text_result = ""
 
-    def __init__(self, workDir, auths):
+    def __init__(self, work_dir, auths):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
 
         self.__initUI()

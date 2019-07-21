@@ -12,9 +12,9 @@ class CalcFileHash(object):
     version = "1.0.0"
     _all_hashes = {"md5", "sha1", "sha256", "sha384", "sha512"}
 
-    def __init__(self, file, workDir=None):
+    def __init__(self, file, work_dir=None):
         self.file = file
-        self.workDir = workDir
+        self.work_dir = work_dir
         self._basic = {}
         self._hashes = {}
 

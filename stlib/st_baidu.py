@@ -59,8 +59,8 @@ class BaiduASR(object):
     # 声音文件转字符串
     version = "1.0.0"
 
-    def __init__(self, workDir, file, auths):
-        self.workDir = workDir
+    def __init__(self, work_dir, file, auths):
+        self.work_dir = work_dir
         self.file = file
         self.auths = {}
         # self.auths["appId"] = auths["appid"]

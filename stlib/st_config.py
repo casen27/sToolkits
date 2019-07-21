@@ -14,10 +14,10 @@ class CONFIG(object):
     default_config = DEFAULT_CONFIG
     default_name = DEFAULT_INI_NAME
 
-    def __init__(self, workDir, file=""):
+    def __init__(self, work_dir, file=""):
         self.file = file if file else self.default_name
-        self.workDir = workDir
-        self.fullpath = os.path.join(self.workDir, self.file)
+        self.work_dir = work_dir
+        self.fullpath = os.path.join(self.work_dir, self.file)
         self.config = self.default_config
         self._reset()
 

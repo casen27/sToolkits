@@ -10,9 +10,9 @@ from .st_tkui_baidu import BaiduASRUI, BaiduSynthesisUI, BaiduTranslateUI
 
 class MainWindow(tkinter.Tk):
 
-    def __init__(self, workDir):
+    def __init__(self, work_dir):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = {}
         self.auth1 = {}
         self.auth2 = {}
@@ -28,7 +28,7 @@ class MainWindow(tkinter.Tk):
         self.title("sToolkits —— AI小工具箱")
         # 菜单栏
         menubar = tkinter.Menu(self)
-        modifyMenubar(self, menubar, self.workDir, self.auths)
+        modifyMenubar(self, menubar, self.work_dir, self.auths)
 
     def _init_options(self):
         # 内容
@@ -65,7 +65,7 @@ class MainWindow(tkinter.Tk):
         self._check_auths()
 
     def _get_auths(self):
-        con = CONFIG(workDir=self.workDir)
+        con = CONFIG(work_dir=self.work_dir)
         self.auths = con.get()
         tokens1 = self.auths["BAIDU_DEFAULT"]
         tokens2 = self.auths["BAIDU_TRANSLATE"]
@@ -103,7 +103,7 @@ class MainWindow(tkinter.Tk):
         # 功能1：语音转文字
         if self.sub1.get() == 0:
             self.sub1.set(1)
-            sw = BaiduASRUI(self, self.workDir, self.auth1)
+            sw = BaiduASRUI(self, self.work_dir, self.auth1)
             self.button1.wait_window(sw)
             self.sub1.set(0)
 
@@ -111,7 +111,7 @@ class MainWindow(tkinter.Tk):
         # 功能2：文字转语音
         if self.sub2.get() == 0:
             self.sub2.set(1)
-            sw = BaiduSynthesisUI(self, self.workDir, self.auth1)
+            sw = BaiduSynthesisUI(self, self.work_dir, self.auth1)
             self.button2.wait_window(sw)
             self.sub2.set(0)
 
@@ -122,11 +122,11 @@ class MainWindow(tkinter.Tk):
         # 功能4：翻译
         if self.sub4.get() == 0:
             self.sub4.set(1)
-            sw = BaiduTranslateUI(self, self.workDir, self.auth2)
+            sw = BaiduTranslateUI(self, self.work_dir, self.auth2)
             self.button4.wait_window(sw)
             self.sub4.set(0)
 
 
-def run(workDir):
-    mw = MainWindow(workDir=workDir)
+def run(work_dir):
+    mw = MainWindow(work_dir=work_dir)
     mw.run()

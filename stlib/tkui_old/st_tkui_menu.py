@@ -10,19 +10,19 @@ from .st_settings import BAIDU_AI_KEYS_URL
 
 class MenuBase(object):
 
-    def __init__(self, root, workDir, auths):
+    def __init__(self, root, work_dir, auths):
         self.root = root
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
 
 
 class MenuSetting(MenuBase):
 
-    def __init__(self, root, workDir, auths):
-        super().__init__(root, workDir, auths)
+    def __init__(self, root, work_dir, auths):
+        super().__init__(root, work_dir, auths)
 
     def set_keys(self):
-        skw = SetKeysWindow(self.root, self.workDir, self.auths)
+        skw = SetKeysWindow(self.root, self.work_dir, self.auths)
         skw.run()
 
     def quit(self):
@@ -33,17 +33,17 @@ class MenuSetting(MenuBase):
 
 class MenuHelp(MenuBase):
 
-    def __init__(self, root, workDir, auths):
-        super().__init__(root, workDir, auths)
+    def __init__(self, root, work_dir, auths):
+        super().__init__(root, work_dir, auths)
 
     def about(self):
         showinfo(title="关于", message="关于小工具的一些说明")
 
 
-def modifyMenubar(root, menubar, workDir, auths):
+def modifyMenubar(root, menubar, work_dir, auths):
     # 设置
     menu = tkinter.Menu(menubar, tearoff=0)
-    ms = MenuSetting(root, workDir, auths)
+    ms = MenuSetting(root, work_dir, auths)
     menu.add_command(label="配置Key", command=ms.set_keys)
     menu.add_separator()
     menu.add_command(label="退出", command=ms.quit)
@@ -51,7 +51,7 @@ def modifyMenubar(root, menubar, workDir, auths):
 
     # 帮助
     menu = tkinter.Menu(menubar, tearoff=0)
-    mh = MenuHelp(root, workDir, auths)
+    mh = MenuHelp(root, work_dir, auths)
     menu.add_command(label="关于", command=mh.about)
     menubar.add_cascade(label="帮助", menu=menu)
 
@@ -61,10 +61,10 @@ def modifyMenubar(root, menubar, workDir, auths):
 
 class SetKeysWindow(tkinter.Toplevel):
 
-    def __init__(self, root, workDir, auths):
+    def __init__(self, root, work_dir, auths):
         super().__init__()
         self.root = root
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
 
         self.title("语音转文字")
@@ -133,7 +133,7 @@ class SetKeysWindow(tkinter.Toplevel):
         self.auths["BAIDU_DEFAULT"]["secretkey"] = self.str04.get()
         self.auths["BAIDU_TRANSLATE"]["appid"] = self.str12.get()
         self.auths["BAIDU_TRANSLATE"]["secretkey"] = self.str13.get()
-        con = CONFIG(workDir=self.workDir)
+        con = CONFIG(work_dir=self.work_dir)
         con.save(self.auths)
 
         self.root.fresh_connect()

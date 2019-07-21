@@ -269,17 +269,17 @@ class GIFSpliterUI(QtWidgets.QWidget):
     def _button_12_clicked(self):
         # 修改输出目录
         # 由于分割后的图片数量较多，在选定的目录下，新建一个空的同名目录
-        workDir_default = self.lineEdit_12.text()
-        workDir = QtWidgets.QFileDialog.getExistingDirectory(self, "修改存储目录", workDir_default)
-        if workDir:
-            self.__new_dir_valid(workDir)
+        work_dir_default = self.lineEdit_12.text()
+        work_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "修改存储目录", work_dir_default)
+        if work_dir:
+            self.__new_dir_valid(work_dir)
         else:
             # self.__new_dir_invalid()  # 点了取消导致新文件为空
             pass
 
-    def __new_dir_valid(self, workDir):
+    def __new_dir_valid(self, work_dir):
         name = os.path.basename(self.file)
-        fullpath = os.path.join(workDir, name)
+        fullpath = os.path.join(work_dir, name)
         self.lineEdit_12.setText(self._get_output_dir(fullpath))
 
     def _get_output_dir(self, fullpath):
@@ -290,9 +290,9 @@ class GIFSpliterUI(QtWidgets.QWidget):
     def _button_1_clicked(self):
         # 拆分GIF
         gif = self.lineEdit_11.text()
-        workDir = self.lineEdit_12.text()
+        work_dir = self.lineEdit_12.text()
         format = self.comboBox_1.currentText().replace("*", "")
-        gs = GIFSpliter(gif=gif, workDir=workDir, format=format)
+        gs = GIFSpliter(gif=gif, work_dir=work_dir, format=format)
         result = gs.run()
         if result:
             msgBox = QtWidgets.QMessageBox.question(self, "提示", "\n图片分割完成！\n\n是否打开输出目录？\n")

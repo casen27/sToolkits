@@ -15,9 +15,9 @@ from .st_ui_menu import HelpAboutUI, SettingKeysUI
 class MainWindow(QtWidgets.QMainWindow):
     version = "1.1.0"
 
-    def __init__(self, workDir):
+    def __init__(self, work_dir):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = {}
         self.auth1 = {}
         self.auth2 = {}
@@ -215,7 +215,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._get_baidu_auths()
 
     def _menu_setting_keys(self):
-        self._ui_setting_keys = SettingKeysUI(workDir=self.workDir, auths=self.auths)
+        self._ui_setting_keys = SettingKeysUI(work_dir=self.work_dir, auths=self.auths)
         self._ui_setting_keys.signal_close.connect(self._fresh_connect_baidu)
         self._ui_setting_keys.show()
 
@@ -224,7 +224,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_help_about.show()
 
     def _get_baidu_auths(self):
-        con = CONFIG(workDir=self.workDir)
+        con = CONFIG(work_dir=self.work_dir)
         self.auths = con.get()
         tokens1 = self.auths["BAIDU_DEFAULT"]
         tokens2 = self.auths["BAIDU_TRANSLATE"]
@@ -262,15 +262,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self._check_baidu_auths()
 
     def _button_01_clicked(self):
-        self._ui_baidu_asr = BaiduASRUI(workDir=self.workDir, auths=self.auth1)
+        self._ui_baidu_asr = BaiduASRUI(work_dir=self.work_dir, auths=self.auth1)
         self._ui_baidu_asr.show()
 
     def _button_02_clicked(self):
-        self._ui_baidu_syn = BaiduSynthesisUI(workDir=self.workDir, auths=self.auth1)
+        self._ui_baidu_syn = BaiduSynthesisUI(work_dir=self.work_dir, auths=self.auth1)
         self._ui_baidu_syn.show()
 
     def _button_04_clicked(self):
-        self._ui_baidu_tsl = BaiduTranslateUI(workDir=self.workDir, auths=self.auth2)
+        self._ui_baidu_tsl = BaiduTranslateUI(work_dir=self.work_dir, auths=self.auth2)
         self._ui_baidu_tsl.show()
 
     def _button_11_clicked(self):
@@ -289,8 +289,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_pmz = PicMixZipUI()
         self._ui_pmz.show()
 
-def run(workDir):
+def run(work_dir):
     app = QtWidgets.QApplication(sys.argv)
-    ui = MainWindow(workDir=workDir)
+    ui = MainWindow(work_dir=work_dir)
     ui.show()
     sys.exit(app.exec_())

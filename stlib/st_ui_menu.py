@@ -48,9 +48,9 @@ class SettingKeysUI(QtWidgets.QWidget):
     version = "1.0.0"
     signal_close = QtCore.Signal()
 
-    def __init__(self, workDir, auths):
+    def __init__(self, work_dir, auths):
         super().__init__()
-        self.workDir = workDir
+        self.work_dir = work_dir
         self.auths = auths
 
         self.__initUI()
@@ -153,7 +153,7 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.auths["BAIDU_DEFAULT"]["secretkey"] = self.lineEdit_123.text()
         self.auths["BAIDU_TRANSLATE"]["appid"] = self.lineEdit_221.text()
         self.auths["BAIDU_TRANSLATE"]["secretkey"] = self.lineEdit_222.text()
-        con = CONFIG(workDir=self.workDir)
+        con = CONFIG(work_dir=self.work_dir)
         con.save(self.auths)
         # back
         self.close()
