@@ -17,11 +17,11 @@ class BaiduASRUI(QtWidgets.QWidget):
         self.auths = auths
         self.file = ""
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(520, 460)
         self.setWindowTitle("语音转文字")
 
@@ -72,12 +72,12 @@ class BaiduASRUI(QtWidgets.QWidget):
         self.textBrowser_1 = QtWidgets.QTextBrowser(self)
         self.textBrowser_1.setGeometry(QtCore.QRect(10, 180, 500, 250))
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_10.clicked.connect(self._choose_file)
         self.button_11.clicked.connect(self._get_result)
         self.button_12.clicked.connect(self.close)
 
-    def __initDatas(self):
+    def __init_datas(self):
         pass
 
     def _choose_file(self):
@@ -102,11 +102,11 @@ class BaiduSynthesisUI(QtWidgets.QWidget):
         self.work_dir = work_dir
         self.auths = auths
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(520, 400)
         self.setWindowTitle("文字转语音")
 
@@ -162,12 +162,12 @@ class BaiduSynthesisUI(QtWidgets.QWidget):
         self.hLayout_1.addWidget(self.button_12)
         self.hLayout_1.addWidget(self.button_13)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_11.clicked.connect(self._button_11_clicked)
         self.button_12.clicked.connect(self._button_12_clicked)
         self.button_13.clicked.connect(self.close)
 
-    def __initDatas(self):
+    def __init_datas(self):
         pass
 
     def _button_11_clicked(self):
@@ -208,11 +208,11 @@ class BaiduTranslateUI(QtWidgets.QWidget):
         self.work_dir = work_dir
         self.auths = auths
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(640, 700)
         self.setWindowTitle("百度翻译")
 
@@ -286,7 +286,7 @@ class BaiduTranslateUI(QtWidgets.QWidget):
 
         self.timer_1 = QtCore.QTimer(self)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_1.clicked.connect(self._button_1_clicked)
         self.button_11.clicked.connect(self._button_11_clicked)
         self.button_12.clicked.connect(self._button_12_clicked)
@@ -297,7 +297,7 @@ class BaiduTranslateUI(QtWidgets.QWidget):
         self.comboBox_22.activated.connect(self._cbox_3_changed)
         self.timer_1.timeout.connect(self._timer_1_out)
 
-    def __initDatas(self):
+    def __init_datas(self):
         self.text_11.setText(self.text_original)
         self.text_21.setText(self.text_result)
 

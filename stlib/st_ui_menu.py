@@ -17,10 +17,10 @@ class HelpAboutUI(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.__initUI()
-        self.__initActions()
+        self.__init_ui()
+        self.__init_actions()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(440, 210)  # 固定大小
         self.setWindowTitle("关于")
 
@@ -35,7 +35,7 @@ class HelpAboutUI(QtWidgets.QWidget):
         self.button_1.setGeometry(QtCore.QRect(300, 160, 100, 30))
         self.button_1.setText("关闭")
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_1.clicked.connect(self.close)
         self.button_2.clicked.connect(self._open_project_url)
 
@@ -53,11 +53,11 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.work_dir = work_dir
         self.auths = auths
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(480, 280)  # 固定大小
         self.setWindowTitle("百度AI Key设置")
 
@@ -125,7 +125,7 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.button_12.setGeometry(QtCore.QRect(330, 230, 100, 23))
         self.button_12.setText("保存")
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_11.clicked.connect(self._get_baidu_ai_keys)
         self.button_12.clicked.connect(self._save_and_back)
         self.button_131.clicked.connect(self._check_key_131)
@@ -136,7 +136,7 @@ class SettingKeysUI(QtWidgets.QWidget):
         self.lineEdit_221.textChanged.connect(self._auth2_changed)
         self.lineEdit_222.textChanged.connect(self._auth2_changed)
 
-    def __initDatas(self):
+    def __init_datas(self):
         # self.lineEdit_121.setText(self.auths["BAIDU_DEFAULT"]["appid"])
         self.lineEdit_122.setText(self.auths["BAIDU_DEFAULT"]["apikey"])
         self.lineEdit_123.setText(self.auths["BAIDU_DEFAULT"]["secretkey"])

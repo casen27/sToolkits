@@ -22,13 +22,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.auth1 = {}
         self.auth2 = {}
 
-        self.__initUI()
-        self.__initMenu()
-        self.__initTab_all()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_menu()
+        self.__init_tab_all()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(520, 360)  # 固定大小
         self.setWindowTitle("sToolkits —— 实用小工具集")
         self.setObjectName("MainWindow")
@@ -46,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
-    def __initMenu(self):
+    def __init_menu(self):
         self.menu_setting = QtWidgets.QMenu(self.menubar)
         self.menu_setting.setTitle("设置")
         self.menu_help = QtWidgets.QMenu(self.menubar)
@@ -67,28 +67,28 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menu_setting.menuAction())
         self.menubar.addAction(self.menu_help.menuAction())
 
-    def __initTab_all(self):
-        # 主要的tabWidget
-        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 10, 500, 300))
-        self.tabWidget.setObjectName("tabWidget")
+    def __init_tab_all(self):
+        # 主要的tab_widget
+        self.tab_widget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tab_widget.setGeometry(QtCore.QRect(10, 10, 500, 300))
+        self.tab_widget.setObjectName("tab_widget")
 
-        self.__initTab_t00()
-        self.__initTab_t10()
-        self.__initTab_t20()
-        self.__initTab_t30()
+        self.__init_tab_t00()
+        self.__init_tab_t10()
+        self.__init_tab_t20()
+        self.__init_tab_t30()
 
-        self.tabWidget.addTab(self.tab_00, "")
-        self.tabWidget.addTab(self.tab_10, "")
-        self.tabWidget.addTab(self.tab_20, "")
-        self.tabWidget.addTab(self.tab_30, "")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_00), "百度AI")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_10), "图像工具")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_20), "媒体工具")
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_30), "杂类工具")
-        self.tabWidget.setCurrentIndex(0)
+        self.tab_widget.addTab(self.tab_00, "")
+        self.tab_widget.addTab(self.tab_10, "")
+        self.tab_widget.addTab(self.tab_20, "")
+        self.tab_widget.addTab(self.tab_30, "")
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_00), "百度AI")
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_10), "图像工具")
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_20), "媒体工具")
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_30), "杂类工具")
+        self.tab_widget.setCurrentIndex(0)
 
-    def __initTab_t00(self):
+    def __init_tab_t00(self):
         self.tab_00 = QtWidgets.QWidget()
         self.tab_00.setObjectName("tab_00")
 
@@ -135,7 +135,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button_0b.setObjectName("button_0b")
         self.button_0b.setText("设置Keys")
 
-    def __initTab_t10(self):
+    def __init_tab_t10(self):
         self.tab_10 = QtWidgets.QWidget()
         self.tab_10.setObjectName("tab_10")
         self.widget_10 = QtWidgets.QWidget(self.tab_10)
@@ -163,11 +163,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.gLayout_10.addWidget(self.button_15, 1, 0, 1, 1)
         # self.gLayout_10.addWidget(self.button_16, 1, 0, 1, 1)
 
-    def __initTab_t20(self):
+    def __init_tab_t20(self):
         self.tab_20 = QtWidgets.QWidget()
         self.tab_20.setObjectName("tab_20")
 
-    def __initTab_t30(self):
+    def __init_tab_t30(self):
         self.tab_30 = QtWidgets.QWidget()
         self.tab_30.setObjectName("tab_30")
         self.widget_30 = QtWidgets.QWidget(self.tab_30)
@@ -195,7 +195,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.gLayout_30.addWidget(self.button_35, 1, 0, 1, 1)
         # self.gLayout_30.addWidget(self.button_36, 1, 0, 1, 1)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.menu_setting_keys.triggered.connect(self._menu_setting_keys)
         self.menu_setting_exit.triggered.connect(QtWidgets.qApp.quit)
         self.menu_help_about.triggered.connect(self._menu_help_about)
@@ -209,7 +209,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button_31.clicked.connect(self._button_31_clicked)
         self.button_32.clicked.connect(self._button_32_clicked)
 
-    def __initDatas(self):
+    def __init_datas(self):
         self.statusbar.showMessage("欢迎使用**小工具箱", 3000)
         self._disable_baidu_all()
         self._get_baidu_auths()

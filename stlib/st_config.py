@@ -17,7 +17,7 @@ class CONFIG(object):
     def __init__(self, work_dir, file=""):
         self.file = file if file else self.default_name
         self.work_dir = work_dir
-        self.fullpath = os.path.join(self.work_dir, self.file)
+        self.full_path = os.path.join(self.work_dir, self.file)
         self.config = self.default_config
         self._reset()
 
@@ -26,9 +26,9 @@ class CONFIG(object):
         # self.con.optionxform = str  # 保持获取的键原样。否则全为小写
 
     def get(self):
-        if os.path.isfile(self.fullpath):
+        if os.path.isfile(self.full_path):
             # 存在配置文件，读取并赋值
-            self.con.read(self.fullpath, encoding="utf-8")
+            self.con.read(self.full_path, encoding="utf-8")
             for section in self.con.sections():
                 options = self.con.items(section)
                 self.config[section] = {}
@@ -50,5 +50,5 @@ class CONFIG(object):
         self._save_file()
 
     def _save_file(self):
-        with open(self.fullpath, "w", encoding="utf-8") as fp:
+        with open(self.full_path, "w", encoding="utf-8") as fp:
             self.con.write(fp)

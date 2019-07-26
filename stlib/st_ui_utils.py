@@ -15,11 +15,11 @@ class CalcFileHashUI(QtWidgets.QWidget):
         super().__init__()
         self.file = ""
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setObjectName("CalcFileHashUI")
         self.setFixedSize(600, 480)
         self.setWindowTitle("哈希值计算")
@@ -162,7 +162,7 @@ class CalcFileHashUI(QtWidgets.QWidget):
         self.button_34.setObjectName("button_34")
         self.button_34.setText("复制text到剪切板")
 
-    def __initDatas(self):
+    def __init_datas(self):
         self.lineEdit_11.setText("")
         self.lineEdit_12.setText("")
         self.lineEdit_13.setText("")
@@ -184,7 +184,7 @@ class CalcFileHashUI(QtWidgets.QWidget):
         self.button_33.setEnabled(False)
         self.button_34.setEnabled(False)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_31.clicked.connect(self._button_31_clicked)
         self.button_32.clicked.connect(self._button_32_clicked)
         self.button_33.clicked.connect(self._button_33_clicked)
@@ -221,7 +221,7 @@ class CalcFileHashUI(QtWidgets.QWidget):
 
     def __file_invalid(self):
         # 文件无效
-        self.__initDatas()
+        self.__init_datas()
 
     def _button_32_clicked(self):
         needhash = set()
@@ -263,11 +263,11 @@ class PicMixZipUI(QtWidgets.QWidget):
         self.zip = ""
         self.outpic = ""
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setObjectName("PicMixZipUI")
         self.setFixedSize(600, 300)
         self.setWindowTitle("图片种子文件合成")
@@ -318,12 +318,12 @@ class PicMixZipUI(QtWidgets.QWidget):
         self.button_0.setText("生成文件")
         self.button_0.setEnabled(False)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_2.clicked.connect(self._button_2_clicked)
         self.button_3.clicked.connect(self._button_3_clicked)
         self.button_0.clicked.connect(self._button_0_clicked)
 
-    def __initDatas(self):
+    def __init_datas(self):
         pass
 
     def _button_2_clicked(self):

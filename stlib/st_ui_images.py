@@ -18,11 +18,11 @@ class ColorBoardUI(QtWidgets.QWidget):
         self._b = self._clean_rgb(b)
         self._string = "#"
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(320, 300)
         self.setWindowTitle("RGB色彩筛选板")
 
@@ -81,13 +81,13 @@ class ColorBoardUI(QtWidgets.QWidget):
         self.gLayout_1.addWidget(self.checkBox_1, 3, 1, 1, 2)
         self.gLayout_1.addWidget(self.label_1, 4, 0, 1, 7)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.slider_r.valueChanged[int].connect(self._slider_r_changed)
         self.slider_g.valueChanged[int].connect(self._slider_g_changed)
         self.slider_b.valueChanged[int].connect(self._slider_b_changed)
         self.checkBox_1.stateChanged.connect(self._lock_gray)
 
-    def __initDatas(self):
+    def __init_datas(self):
         self.lineEdit.setText(self._string)
         self.label_r.setText("Red")
         self.label_g.setText("Green")
@@ -160,11 +160,11 @@ class GIFSpliterUI(QtWidgets.QWidget):
         self.output = ""
         self.rank = 1
 
-        self.__initUI()
-        self.__initActions()
-        self.__initDatas()
+        self.__init_ui()
+        self.__init_actions()
+        self.__init_datas()
 
-    def __initUI(self):
+    def __init_ui(self):
         self.setFixedSize(620, 600)
         self.setWindowTitle("GIF分割器")
 
@@ -220,13 +220,13 @@ class GIFSpliterUI(QtWidgets.QWidget):
         self.gLayout_1.addWidget(self.button_1, 2, 5, 1, 1)
         self.gLayout_1.addWidget(self.button_0, 3, 5, 1, 1)
 
-    def __initActions(self):
+    def __init_actions(self):
         self.button_1.clicked.connect(self._button_1_clicked)
         self.button_11.clicked.connect(self._button_11_clicked)
         self.button_12.clicked.connect(self._button_12_clicked)
         self.button_0.clicked.connect(self.close)
 
-    def __initDatas(self):
+    def __init_datas(self):
         self.lineEdit_11.setText(self.file)
 
     def _button_11_clicked(self):
@@ -279,11 +279,11 @@ class GIFSpliterUI(QtWidgets.QWidget):
 
     def __new_dir_valid(self, work_dir):
         name = os.path.basename(self.file)
-        fullpath = os.path.join(work_dir, name)
-        self.lineEdit_12.setText(self._get_output_dir(fullpath))
+        full_path = os.path.join(work_dir, name)
+        self.lineEdit_12.setText(self._get_output_dir(full_path))
 
-    def _get_output_dir(self, fullpath):
-        new_dir, _ = os.path.splitext(fullpath)
+    def _get_output_dir(self, full_path):
+        new_dir, _ = os.path.splitext(full_path)
         self.output = new_dir
         return new_dir
 
