@@ -1,5 +1,3 @@
-# gif处理子功能的界面
-
 import os
 
 from PySide2 import QtCore, QtGui, QtWidgets
@@ -152,6 +150,7 @@ class ColorBoardUI(QtWidgets.QWidget):
 
 
 class GIFSpliterUI(QtWidgets.QWidget):
+    # GIF分割器界面
     version = "1.0.2"
 
     def __init__(self):

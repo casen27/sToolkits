@@ -93,6 +93,7 @@ class GIFReverse(object):
 
 
 class Image2CharArt(object):
+    # 图片转字符画
     version = "1.0.1"
     ratio_limit_vip = 16384
     max_limit_vip = 16384

@@ -9,6 +9,7 @@ from .st_config import CONFIG
 from .st_ui_baidu import BaiduASRUI, BaiduSynthesisUI, BaiduTranslateUI
 from .st_ui_utils import CalcFileHashUI, PicMixZipUI
 from .st_ui_images import ColorBoardUI, GIFSpliterUI
+from .st_ui_videos import VideoOverviewUI
 from .st_ui_menu import HelpAboutUI, SettingKeysUI
 
 
@@ -166,6 +167,30 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init_tab_t20(self):
         self.tab_20 = QtWidgets.QWidget()
         self.tab_20.setObjectName("tab_20")
+        self.widget_20 = QtWidgets.QWidget(self.tab_20)
+        self.widget_20.setGeometry(QtCore.QRect(50, 20, 400, 120))
+        self.widget_20.setObjectName("widget_20")
+        self.gLayout_20 = QtWidgets.QGridLayout(self.widget_20)
+        self.gLayout_20.setContentsMargins(0, 0, 0, 0)
+        self.gLayout_20.setObjectName("gLayout_20")
+        self.button_21 = QtWidgets.QPushButton(self.widget_20)
+        self.button_21.setObjectName("button_21")
+        self.button_21.setText("视频概览图")
+        self.button_22 = QtWidgets.QPushButton(self.widget_20)
+        self.button_22.setObjectName("button_22")
+        self.button_22.setText("按钮22")
+        self.button_23 = QtWidgets.QPushButton(self.widget_20)
+        self.button_23.setObjectName("button_23")
+        self.button_23.setText("按钮23")
+        self.button_24 = QtWidgets.QPushButton(self.widget_20)
+        self.button_24.setObjectName("button_24")
+        self.button_24.setText("按钮24")
+        self.gLayout_20.addWidget(self.button_21, 0, 0, 1, 1)
+        self.gLayout_20.addWidget(self.button_22, 0, 1, 1, 1)
+        self.gLayout_20.addWidget(self.button_23, 0, 2, 1, 1)
+        self.gLayout_20.addWidget(self.button_24, 1, 0, 1, 1)
+        # self.gLayout_20.addWidget(self.button_25, 1, 0, 1, 1)
+        # self.gLayout_20.addWidget(self.button_26, 1, 0, 1, 1)
 
     def __init_tab_t30(self):
         self.tab_30 = QtWidgets.QWidget()
@@ -206,6 +231,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button_0b.clicked.connect(self._menu_setting_keys)
         self.button_11.clicked.connect(self._button_11_clicked)
         self.button_12.clicked.connect(self._button_12_clicked)
+        self.button_21.clicked.connect(self._button_21_clicked)
         self.button_31.clicked.connect(self._button_31_clicked)
         self.button_32.clicked.connect(self._button_32_clicked)
 
@@ -281,6 +307,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_gifspliter = GIFSpliterUI()
         self._ui_gifspliter.show()
 
+    def _button_21_clicked(self):
+        self._ui_video_ov = VideoOverviewUI()
+        self._ui_video_ov.show()
+
     def _button_31_clicked(self):
         self._ui_filehash = CalcFileHashUI()
         self._ui_filehash.show()
@@ -290,7 +320,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_pmz.show()
 
 def run(work_dir):
-    app = QtWidgets.QApplication(sys.argv)
+    qapp = QtWidgets.QApplication(sys.argv)
     ui = MainWindow(work_dir=work_dir)
     ui.show()
-    sys.exit(app.exec_())
+    sys.exit(qapp.exec_())
