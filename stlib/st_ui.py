@@ -24,8 +24,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.auth2 = {}
 
         self.__init_ui()
-        self.__init_menu()
-        self.__init_tab_all()
         self.__init_actions()
         self.__init_datas()
 
@@ -46,6 +44,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.statusbar = QtWidgets.QStatusBar()
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
+
+        self.__init_menu()
+        self.__init_tab_all()
 
     def __init_menu(self):
         self.menu_setting = QtWidgets.QMenu(self.menubar)
@@ -69,31 +70,30 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menu_help.menuAction())
 
     def __init_tab_all(self):
-        # 主要的tab_widget
-        self.tab_widget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tab_widget.setGeometry(QtCore.QRect(10, 10, 500, 300))
-        self.tab_widget.setObjectName("tab_widget")
+        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tabWidget.setGeometry(QtCore.QRect(10, 10, 500, 300))
+        self.tabWidget.setObjectName("tabWidget")
 
         self.__init_tab_t00()
         self.__init_tab_t10()
         self.__init_tab_t20()
         self.__init_tab_t30()
 
-        self.tab_widget.addTab(self.tab_00, "")
-        self.tab_widget.addTab(self.tab_10, "")
-        self.tab_widget.addTab(self.tab_20, "")
-        self.tab_widget.addTab(self.tab_30, "")
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_00), "百度AI")
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_10), "图像工具")
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_20), "媒体工具")
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_30), "杂类工具")
-        self.tab_widget.setCurrentIndex(0)
+        self.tabWidget.addTab(self.tab_t00, "")
+        self.tabWidget.addTab(self.tab_t10, "")
+        self.tabWidget.addTab(self.tab_t20, "")
+        self.tabWidget.addTab(self.tab_t30, "")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_t00), "百度AI")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_t10), "图像工具")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_t20), "媒体工具")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_t30), "杂类工具")
+        self.tabWidget.setCurrentIndex(0)
 
     def __init_tab_t00(self):
-        self.tab_00 = QtWidgets.QWidget()
-        self.tab_00.setObjectName("tab_00")
+        self.tab_t00 = QtWidgets.QWidget()
+        self.tab_t00.setObjectName("tab_00")
 
-        self.widget_00 = QtWidgets.QWidget(self.tab_00)
+        self.widget_00 = QtWidgets.QWidget(self.tab_t00)
         self.widget_00.setGeometry(QtCore.QRect(50, 20, 400, 120))
         self.widget_00.setObjectName("widget_00")
         self.gLayout_00 = QtWidgets.QGridLayout(self.widget_00)
@@ -118,7 +118,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.gLayout_00.addWidget(self.button_05, 1, 0, 1, 1)
         # self.gLayout_00.addWidget(self.button_06, 1, 0, 1, 1)
 
-        self.widget_01 = QtWidgets.QWidget(self.tab_00)
+        self.widget_01 = QtWidgets.QWidget(self.tab_t00)
         self.widget_01.setGeometry(QtCore.QRect(0, 210, 500, 70))
         self.widget_01.setObjectName("widget_01")
         self.label_01 = QtWidgets.QLabel(self.widget_01)
@@ -137,9 +137,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button_0b.setText("设置Keys")
 
     def __init_tab_t10(self):
-        self.tab_10 = QtWidgets.QWidget()
-        self.tab_10.setObjectName("tab_10")
-        self.widget_10 = QtWidgets.QWidget(self.tab_10)
+        self.tab_t10 = QtWidgets.QWidget()
+        self.tab_t10.setObjectName("tab_t10")
+        self.widget_10 = QtWidgets.QWidget(self.tab_t10)
         self.widget_10.setGeometry(QtCore.QRect(50, 20, 400, 120))
         self.widget_10.setObjectName("widget_10")
         self.gLayout_10 = QtWidgets.QGridLayout(self.widget_10)
@@ -165,9 +165,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.gLayout_10.addWidget(self.button_16, 1, 0, 1, 1)
 
     def __init_tab_t20(self):
-        self.tab_20 = QtWidgets.QWidget()
-        self.tab_20.setObjectName("tab_20")
-        self.widget_20 = QtWidgets.QWidget(self.tab_20)
+        self.tab_t20 = QtWidgets.QWidget()
+        self.tab_t20.setObjectName("tab_t20")
+        self.widget_20 = QtWidgets.QWidget(self.tab_t20)
         self.widget_20.setGeometry(QtCore.QRect(50, 20, 400, 120))
         self.widget_20.setObjectName("widget_20")
         self.gLayout_20 = QtWidgets.QGridLayout(self.widget_20)
@@ -193,9 +193,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.gLayout_20.addWidget(self.button_26, 1, 0, 1, 1)
 
     def __init_tab_t30(self):
-        self.tab_30 = QtWidgets.QWidget()
-        self.tab_30.setObjectName("tab_30")
-        self.widget_30 = QtWidgets.QWidget(self.tab_30)
+        self.tab_t30 = QtWidgets.QWidget()
+        self.tab_t30.setObjectName("tab_30")
+        self.widget_30 = QtWidgets.QWidget(self.tab_t30)
         self.widget_30.setGeometry(QtCore.QRect(50, 20, 400, 120))
         self.widget_30.setObjectName("widget_30")
         self.gLayout_30 = QtWidgets.QGridLayout(self.widget_30)
